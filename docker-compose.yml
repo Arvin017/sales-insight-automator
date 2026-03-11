@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  # ── Backend API ──────────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: production
+    container_name: sia-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      - PORT=8000
+      - ENVIRONMENT=production
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - sia-network
+
+  # ── Frontend SPA ─────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: production
+      args:
+        - VITE_API_URL=http://localhost:8000
+    container_name: sia-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - sia-network
+
+networks:
+  sia-network:
+    driver: bridge

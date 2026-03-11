@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.pyc
+
+# Node / frontend
+node_modules/
+frontend/dist/
+frontend/.env
+
+# Environment files (NEVER commit real secrets)
+.env
+backend/.env
+*.env.local
+
+# Docker volumes
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
