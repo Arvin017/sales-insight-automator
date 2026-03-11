@@ -300,3 +300,10 @@ Upload a sales file and trigger AI summary + email delivery.
 ---
 
 *Built by the Rabbitt AI Engineering team · Sprint duration: 3 hours*
+
+
+## ⚠️ Deployment Note
+
+Backend is deployed on Render free tier.
+
+The first request may take **30–60 seconds** to wake the server if it has been idle.
